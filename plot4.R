@@ -16,10 +16,3 @@ ggplot(data = aggCoalEMI, aes(x=year, y=Emissions)) + geom_line() + geom_text(ae
 ### The answer is YES
 dev.copy(png, filename="plot4.png", width=480, height=480)
 dev.off ()
-
-
-barplot(aggCoalEMI$Emissions, names.arg = aggCoalEMI$year, 
-        xlab = "Year", ylab = "Emissions")
-
-dev.copy(png, filename="plot4_bar.png", width=480, height=480)
-dev.off ()

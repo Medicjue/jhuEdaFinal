@@ -3,19 +3,13 @@ source("loadData.R")
 
 source("readData.R")
 
-types <- unique(EMI$type)
+library(ggplot2)
 
-par(mfrow = c(2,2))
+balEMI <- subset(EMI, EMI$fips=="24510")
 
-for(type in types) {
-  typeEMI <- subset(EMI, EMI$type==type)
-  balEMIOfType <- subset(typeEMI, typeEMI$fips=="24510")
-  
-  aggBalEMI <- aggregate(Emissions ~ year, balEMIOfType, sum)
-  
-  barplot(aggBalEMI$Emissions, names.arg = aggBalEMI$year, 
-          xlab = type, ylab = "Emissions")
-}
+aggBalEMI <- aggregate(Emissions ~ year+type, balEMI, sum)
+
+ggplot(data=aggBalEMI, aes(x=year, y=Emissions, group=type, color=type)) + geom_line() + geom_point( size=4, shape=21, fill="white") + xlab("Year") + ylab("Emissions (tons)") 
 
 dev.copy(png, filename="plot3.png", width=480, height=480)
 dev.off ()
