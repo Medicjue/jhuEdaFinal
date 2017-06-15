@@ -1,10 +1,18 @@
 ## plot6.R ##
-source("loadData.R")
-
-source("readData.R")
-
 library(plyr)
 library(ggplot2)
+
+### Load Data ###
+tmpFileName <- "Data.zip"
+if(!file.exists(tmpFileName)) {
+  fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+  download.file(fileURL, tmpFileName)
+  unzip(tmpFileName)
+}
+
+### Read Data ###
+EMI <- readRDS(file = "summarySCC_PM25.rds")
+SCC <- readRDS(file = "Source_Classification_Code.rds")
 
 motorSCC <- SCC[grepl('vehicle', SCC$SCC.Level.Two, ignore.case=T), ]
 motorEMI <- merge(x=EMI, y=motorSCC, by="SCC")
