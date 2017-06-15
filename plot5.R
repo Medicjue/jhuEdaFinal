@@ -6,7 +6,7 @@ source("readData.R")
 library(plyr)
 library(ggplot2)
 
-motorSCC <- SCC[grepl('Motor', SCC$Short.Name, fixed=T), ]
+motorSCC <- SCC[grepl('vehicle', SCC$SCC.Level.Two, ignore.case=T), ]
 motorEMI <- merge(x=EMI, y=motorSCC, by="SCC")
 motorBalEMI <- subset(motorEMI, motorEMI$fips=="24510")
 
